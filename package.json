@@ -46,8 +46,12 @@
         ]
     },
     "dependencies": {
+        "@types/bcryptjs": "^2.4.6",
         "@types/cookie-parser": "^1.4.7",
         "@types/jsonwebtoken": "^9.0.6",
+        "@types/multer": "^1.4.11",
+        "bcryptjs": "^2.4.3",
+        "cloudinary": "^2.0.3",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "cross-env": "^7.0.3",
@@ -58,6 +62,7 @@
         "jsonwebtoken": "^9.0.2",
         "mongodb": "4.1",
         "mongoose": "^8.2.1",
+        "multer": "^1.4.5-lts.1",
         "uuid": "^9.0.1",
         "winston": "^3.10.0"
     }

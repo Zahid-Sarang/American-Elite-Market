@@ -1,12 +1,12 @@
 import { Request } from "express";
 
 export interface UserInfo {
-    _id: string;
+    _id?: string;
     userName: string;
     email: string;
     password: string;
     bio?: string;
-    profile?: string;
+    profileImage?: string;
 }
 
 export interface CreateUserRequest extends Request {

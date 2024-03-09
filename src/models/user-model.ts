@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema<UserInfo>(
         bio: {
             type: String, // Bio field is optional
         },
-        profile: {
+        profileImage: {
             type: String, // Profile field is optional
         },
     },
