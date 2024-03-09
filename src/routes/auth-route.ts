@@ -7,7 +7,7 @@ import { AuthService } from "../service/auth-service";
 import { HashedPassword } from "../service/hashedPassword-Service";
 import { upload } from "../common/middlewares/multerFileHanndler";
 import { CloudinaryStorage } from "../service/cloudinaryStorage";
-import { JwtTokenService } from "../service/token-service";
+import { JwtTokenService } from "../service/jwtToken-service";
 
 const authRouter = express.Router();
 const authService = new AuthService();

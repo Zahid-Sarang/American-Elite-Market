@@ -5,8 +5,8 @@ import { CreateUserRequest } from "../types/user-types";
 import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
 import { HashedPassword } from "../service/hashedPassword-Service";
-import { FileStorage } from "../types/storage";
-import { JwtTokenService } from "../service/token-service";
+import { FileStorage } from "../types/storage-types";
+import { JwtTokenService } from "../service/jwtToken-service";
 import { JwtPayload } from "jsonwebtoken";
 
 export class AuthController {
@@ -66,10 +66,23 @@ export class AuthController {
         };
 
         const accessToken = this.jwtTokenService.generateAccessToken(payload);
+        const newRefreshToken =
+            await this.jwtTokenService.persistRefreshToken(user);
+        const refreshToken = this.jwtTokenService.generateRefreshToken({
+            ...payload,
+            id: String(newRefreshToken.id),
+        });
         res.cookie("accessToken", accessToken, {
             domain: "localhost",
             sameSite: "strict",
             maxAge: 1000 * 60 * 60, // 60 minutes
+            httpOnly: true,
+        });
+
+        res.cookie("refreshToken", refreshToken, {
+            domain: "localhost",
+            sameSite: "strict",
+            maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
             httpOnly: true,
         });
         res.status(201).json({ id: user._id });

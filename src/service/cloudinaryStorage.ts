@@ -1,7 +1,7 @@
 import fs from "fs";
 import createHttpError from "http-errors";
 import { v2 as cloudinary } from "cloudinary";
-import { CloudinaryUploadResponse, FileStorage } from "../types/storage";
+import { CloudinaryUploadResponse, FileStorage } from "../types/storage-types";
 import { Config } from "../config";
 
 cloudinary.config({
