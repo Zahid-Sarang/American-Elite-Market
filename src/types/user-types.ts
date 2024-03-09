@@ -12,3 +12,12 @@ export interface UserInfo {
 export interface CreateUserRequest extends Request {
     body: UserInfo;
 }
+
+export interface Login {
+    email: string;
+    password: string;
+}
+
+export interface LoginRequest extends Request {
+    body: Login;
+}

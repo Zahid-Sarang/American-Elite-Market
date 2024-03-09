@@ -19,4 +19,8 @@ export class AuthService {
         const user = await UserModel.create(userInfo);
         return user;
     };
+
+    findByEmail = async (userEmail: string) => {
+        return await UserModel.findOne({ email: userEmail });
+    };
 }
