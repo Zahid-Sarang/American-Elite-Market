@@ -6,6 +6,8 @@ import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
 import { HashedPassword } from "../service/hashedPassword-Service";
 import { FileStorage } from "../types/storage";
+import { JwtTokenService } from "../service/token-service";
+import { JwtPayload } from "jsonwebtoken";
 
 export class AuthController {
     constructor(
@@ -13,6 +15,7 @@ export class AuthController {
         private logger: Logger,
         private hashedPassword: HashedPassword,
         private imageStorage: FileStorage,
+        private jwtTokenService: JwtTokenService,
     ) {}
 
     register = async (
@@ -57,7 +60,18 @@ export class AuthController {
             bio,
             profileImage: profileImageLink.url,
         });
+        const payload: JwtPayload = {
+            sub: String(user.id),
+            email: user.email,
+        };
 
+        const accessToken = this.jwtTokenService.generateAccessToken(payload);
+        res.cookie("accessToken", accessToken, {
+            domain: "localhost",
+            sameSite: "strict",
+            maxAge: 1000 * 60 * 60, // 60 minutes
+            httpOnly: true,
+        });
         res.status(201).json({ id: user._id });
     };
 }
