@@ -10,6 +10,7 @@ import { CloudinaryStorage } from "../service/cloudinaryStorage";
 import { JwtTokenService } from "../service/jwtToken-service";
 import loginUserValidator from "../validator/loginUser-Validator";
 import authMiddlware from "../common/middlewares/authMiddlware";
+import validateRefreshToken from "../common/middlewares/validateRefreshToken";
 
 const authRouter = express.Router();
 const authService = new AuthService();
@@ -38,4 +39,9 @@ authRouter.post(
 );
 
 authRouter.get("/self", authMiddlware, asyncWrapper(authController.self));
+authRouter.post(
+    "/refreshToken",
+    validateRefreshToken,
+    asyncWrapper(authController.refreshTokenGenerate),
+);
 export default authRouter;

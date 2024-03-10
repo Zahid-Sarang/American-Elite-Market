@@ -84,6 +84,8 @@ export class AuthController {
             bio,
             profileImage: profileImageLink.url,
         });
+
+        // generate Tokens
         const payload: JwtPayload = {
             sub: String(user.id),
             email: user.email,
@@ -159,5 +161,42 @@ export class AuthController {
         const authReq = req as AuthRequest;
         const user = await this.authService.findById(authReq.auth.sub);
         res.json(user);
+    };
+
+    // refresh Token rotation
+    refreshTokenGenerate = async (
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        const authReq = req as AuthRequest;
+        const payload: JwtPayload = {
+            sub: authReq.auth.sub,
+            email: authReq.auth.email,
+        };
+        const accessToken = this.jwtTokenService.generateAccessToken(payload);
+
+        // check user with that token exist
+        const user = await this.authService.findById(authReq.auth.sub);
+        if (!user) {
+            const error = createHttpError(
+                400,
+                "User with token could not found",
+            );
+            return next(error);
+        }
+        const newRefreshToken =
+            await this.jwtTokenService.persistRefreshToken(user);
+
+        // delete Old Token
+        await this.jwtTokenService.deleteRefreshToken(authReq.auth.id!);
+
+        const refreshToken = this.jwtTokenService.generateRefreshToken({
+            ...payload,
+            id: String(newRefreshToken.id),
+        });
+        this.setCookies(res, accessToken, refreshToken);
+        this.logger.info("new refresh token generated for", authReq.auth.sub);
+        res.json("new refresh token generateds");
     };
 }

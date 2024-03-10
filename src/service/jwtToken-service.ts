@@ -36,4 +36,7 @@ export class JwtTokenService {
         });
         return refreshToken;
     };
+    deleteRefreshToken = async (tokenId: string) => {
+        return await refreshTokenModel.findByIdAndDelete(tokenId);
+    };
 }
