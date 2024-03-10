@@ -38,7 +38,7 @@ export class PostController {
             return next(createHttpError(400, "User Not Found!"));
         }
         const post = await this.postService.create(user, { content });
-        res.status(201).json({ id: post._id as string });
+        res.status(201).json({ id: post._id });
     };
 
     // Get One Post Method
@@ -60,5 +60,38 @@ export class PostController {
         const posts = await this.postService.getPosts();
         res.json(posts);
     };
-    // updatePost = (req: PostRequest, res: Response, next: NextFunction) => {};
+    updatePost = async (
+        req: PostRequest,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        const { content } = req.body;
+
+        const userId = (req as AuthRequest).auth.sub;
+
+        const postId = req.params.postId;
+        if (!postId) {
+            return next(createHttpError(400, "Invalid post ID!"));
+        }
+
+        const isPostExist = await this.postService.findPostById(postId);
+        if (!isPostExist) {
+            return next(createHttpError(400, "Post Not Found"));
+        }
+
+        if (isPostExist.user._id !== userId) {
+            return next(
+                createHttpError(
+                    400,
+                    "You are not allowed to update this post!",
+                ),
+            );
+        }
+
+        const updatedPost = await this.postService.updateById(postId, {
+            content,
+        });
+
+        res.json(updatedPost);
+    };
 }

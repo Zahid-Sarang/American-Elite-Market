@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema<UserInfo>(
     {
         _id: {
             type: String,
-            default: uuidv4,
+            default: () => uuidv4(),
         },
         userName: {
             type: String,

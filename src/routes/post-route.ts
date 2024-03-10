@@ -20,4 +20,9 @@ postRoute.get(
 );
 postRoute.get("/", authMiddlware, asyncWrapper(postController.getAllPost));
 
+postRoute.patch(
+    "/:postId",
+    authMiddlware,
+    asyncWrapper(postController.updatePost),
+);
 export default postRoute;
