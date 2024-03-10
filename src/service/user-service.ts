@@ -1,6 +1,6 @@
 import createHttpError from "http-errors";
 import UserModel from "../models/user-model";
-import { UserInfo } from "../types/user-types";
+import { UpdateUser, UserInfo } from "../types/user-types";
 
 export class UserService {
     constructor() {}
@@ -30,5 +30,14 @@ export class UserService {
 
     getUsers = async () => {
         return await UserModel.find().select(["-password", "-__v"]);
+    };
+
+    updateById = async (userId: string, user: UpdateUser) => {
+        const { userName, bio, profileImage } = user;
+        return await UserModel.findByIdAndUpdate(
+            { _id: userId },
+            { userName, bio, profileImage },
+            { new: true },
+        ).select(["-password", "-__v"]);
     };
 }

@@ -29,3 +29,13 @@ export interface AuthRequest extends Request {
         id?: string;
     };
 }
+
+export interface UpdateUser {
+    userName?: string;
+    bio?: string;
+    profileImage?: string | null;
+}
+
+export interface UpdateUserRequest extends Request {
+    body: UpdateUser;
+}
