@@ -13,4 +13,21 @@ export class PostService {
 
         return newpost;
     };
+
+    updateById = async (postId: string, post: Post) => {
+        const { content } = post;
+        return await PostModal.findByIdAndUpdate(
+            { _id: postId },
+            { content: content },
+            { new: true },
+        );
+    };
+
+    findPostById = async (postId: string) => {
+        return await PostModal.findById(postId);
+    };
+
+    getPosts = async () => {
+        return await PostModal.find();
+    };
 }

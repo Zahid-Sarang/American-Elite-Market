@@ -1,4 +1,4 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { PostRequest } from "../types/post-types";
 import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
@@ -14,6 +14,7 @@ export class PostController {
         private logger: Logger,
     ) {}
 
+    // Create Post Method
     createPost = async (
         req: PostRequest,
         res: Response,
@@ -40,7 +41,24 @@ export class PostController {
         res.status(201).json({ id: post._id as string });
     };
 
+    // Get One Post Method
+    getOnePost = async (req: Request, res: Response, next: NextFunction) => {
+        const postId = req.params.postId;
+        if (!postId) {
+            return next(createHttpError(400, "Invalid post ID!"));
+        }
+
+        const post = await this.postService.findPostById(postId);
+
+        if (!post) {
+            return next(createHttpError(400, "Post Not Found!"));
+        }
+        res.json(post);
+    };
+
+    getAllPost = async (req: Request, res: Response) => {
+        const posts = await this.postService.getPosts();
+        res.json(posts);
+    };
     // updatePost = (req: PostRequest, res: Response, next: NextFunction) => {};
-    // getAllPost = (req: PostRequest, res: Response) => {};
-    // getOnePost = (req: PostRequest, res: Response) => {};
 }

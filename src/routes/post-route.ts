@@ -13,4 +13,11 @@ const postController = new PostController(postService, userService, logger);
 
 postRoute.post("/", authMiddlware, asyncWrapper(postController.createPost));
 
+postRoute.get(
+    "/:postId",
+    authMiddlware,
+    asyncWrapper(postController.getOnePost),
+);
+postRoute.get("/", authMiddlware, asyncWrapper(postController.getAllPost));
+
 export default postRoute;
