@@ -199,4 +199,16 @@ export class AuthController {
         this.logger.info("new refresh token generated for", authReq.auth.sub);
         res.json("new refresh token generateds");
     };
+
+    // Logout
+    logout = async (req: Request, res: Response) => {
+        const authReq = req as AuthRequest;
+        await this.jwtTokenService.deleteRefreshToken(authReq.auth.id!);
+        this.logger.info("Refresh token has been deleted", {
+            id: authReq.auth.id,
+        });
+        res.clearCookie("accessToken");
+        res.clearCookie("refreshToken");
+        res.json("Successfully logged out");
+    };
 }

@@ -11,6 +11,7 @@ import { JwtTokenService } from "../service/jwtToken-service";
 import loginUserValidator from "../validator/loginUser-Validator";
 import authMiddlware from "../common/middlewares/authMiddlware";
 import validateRefreshToken from "../common/middlewares/validateRefreshToken";
+import parseRefreshToken from "../common/middlewares/parseRefreshToken";
 
 const authRouter = express.Router();
 const authService = new AuthService();
@@ -44,4 +45,11 @@ authRouter.post(
     validateRefreshToken,
     asyncWrapper(authController.refreshTokenGenerate),
 );
+
+authRouter.post(
+    "/logout",
+    parseRefreshToken,
+    asyncWrapper(authController.logout),
+);
+
 export default authRouter;
