@@ -33,4 +33,9 @@ export class PostService {
     getPosts = async () => {
         return await PostModel.find().populate("user");
     };
+
+    // Delete a post by its ID
+    deleteById = async (postId: string) => {
+        return await PostModel.findByIdAndDelete(postId);
+    };
 }

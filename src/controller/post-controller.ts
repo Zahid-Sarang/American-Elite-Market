@@ -94,4 +94,32 @@ export class PostController {
 
         res.json(updatedPost);
     };
+
+    // Delete Post Method
+
+    deletePost = async (req: Request, res: Response, next: NextFunction) => {
+        const postId = req.params.postId;
+        const userId = (req as AuthRequest).auth.sub;
+
+        if (!postId) {
+            return next(createHttpError(400, "Invalid post ID!"));
+        }
+
+        const isPostExist = await this.postService.findPostById(postId);
+        if (!isPostExist) {
+            return next(createHttpError(400, "Post Not Found"));
+        }
+
+        if (isPostExist.user._id !== userId) {
+            return next(
+                createHttpError(
+                    400,
+                    "You are not allowed to delete this post!",
+                ),
+            );
+        }
+
+        await this.postService.deleteById(postId);
+        res.json("post deleted");
+    };
 }

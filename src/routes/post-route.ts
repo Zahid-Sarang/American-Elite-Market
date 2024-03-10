@@ -25,4 +25,10 @@ postRoute.patch(
     authMiddlware,
     asyncWrapper(postController.updatePost),
 );
+
+postRoute.delete(
+    "/:postId",
+    authMiddlware,
+    asyncWrapper(postController.deletePost),
+);
 export default postRoute;
