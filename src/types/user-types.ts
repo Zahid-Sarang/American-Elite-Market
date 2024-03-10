@@ -21,3 +21,11 @@ export interface Login {
 export interface LoginRequest extends Request {
     body: Login;
 }
+
+export interface AuthRequest extends Request {
+    auth: {
+        sub: string;
+        email: string;
+        id?: string;
+    };
+}

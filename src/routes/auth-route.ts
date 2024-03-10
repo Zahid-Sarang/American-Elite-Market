@@ -9,6 +9,7 @@ import { upload } from "../common/middlewares/multerFileHanndler";
 import { CloudinaryStorage } from "../service/cloudinaryStorage";
 import { JwtTokenService } from "../service/jwtToken-service";
 import loginUserValidator from "../validator/loginUser-Validator";
+import authMiddlware from "../common/middlewares/authMiddlware";
 
 const authRouter = express.Router();
 const authService = new AuthService();
@@ -35,4 +36,6 @@ authRouter.post(
     loginUserValidator,
     asyncWrapper(authController.login),
 );
+
+authRouter.get("/self", authMiddlware, asyncWrapper(authController.self));
 export default authRouter;

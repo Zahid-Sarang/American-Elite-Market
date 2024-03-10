@@ -23,4 +23,8 @@ export class AuthService {
     findByEmail = async (userEmail: string) => {
         return await UserModel.findOne({ email: userEmail });
     };
+
+    findById = async (userId: string) => {
+        return await UserModel.findById(userId);
+    };
 }

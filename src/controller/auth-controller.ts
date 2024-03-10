@@ -1,7 +1,11 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AuthService } from "../service/auth-service";
 import { Logger } from "winston";
-import { CreateUserRequest, LoginRequest } from "../types/user-types";
+import {
+    AuthRequest,
+    CreateUserRequest,
+    LoginRequest,
+} from "../types/user-types";
 import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
 import { HashedPasswordService } from "../service/hashedPassword-Service";
@@ -148,5 +152,12 @@ export class AuthController {
         });
 
         res.status(200).json({ id: user.id as string });
+    };
+
+    // get Self Info
+    self = async (req: Request, res: Response) => {
+        const authReq = req as AuthRequest;
+        const user = await this.authService.findById(authReq.auth.sub);
+        res.json(user);
     };
 }
