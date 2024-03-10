@@ -28,4 +28,6 @@ userRoute.patch(
     authMiddlware,
     asyncWrapper(userController.updateUser),
 );
+
+userRoute.delete("/", authMiddlware, asyncWrapper(userController.deleteUser));
 export default userRoute;

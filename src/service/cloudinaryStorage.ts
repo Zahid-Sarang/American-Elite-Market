@@ -29,11 +29,8 @@ export class CloudinaryStorage implements FileStorage {
         const filenameWithExtension =
             cloudinaryUrlParts[cloudinaryUrlParts.length - 1];
 
-        // If you specifically want the filename without the extension, you can further split by '.'
         const publicId = filenameWithExtension.split(".")[0];
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        await cloudinary.uploader.destroy(publicId, (error, result) => {
-            throw error;
-        });
+        await cloudinary.uploader.destroy(publicId);
     }
 }

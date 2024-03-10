@@ -40,4 +40,8 @@ export class UserService {
             { new: true },
         ).select(["-password", "-__v"]);
     };
+
+    deleteById = async (userId: string) => {
+        return await UserModel.findByIdAndDelete({ _id: userId });
+    };
 }

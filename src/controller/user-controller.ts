@@ -85,4 +85,22 @@ export class UserController {
         }
         res.json(user);
     };
+
+    // Delete Single User Method
+    deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+        const authReq = req as AuthRequest;
+        const userId = authReq.auth.sub;
+        const isUserExist = await this.userService.findById(userId);
+        if (!isUserExist) {
+            return next(createHttpError(400, "User Not Exists"));
+        }
+
+        const profileUrl = isUserExist.profileImage;
+        if (profileUrl) {
+            this.imageStorage.delete(profileUrl);
+        }
+
+        await this.userService.deleteById(userId);
+        res.json("User deleted");
+    };
 }
