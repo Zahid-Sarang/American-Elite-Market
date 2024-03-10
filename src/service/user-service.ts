@@ -2,7 +2,7 @@ import createHttpError from "http-errors";
 import UserModel from "../models/user-model";
 import { UserInfo } from "../types/user-types";
 
-export class AuthService {
+export class UserService {
     constructor() {}
 
     createUser = async (userInfo: UserInfo) => {
@@ -25,6 +25,10 @@ export class AuthService {
     };
 
     findById = async (userId: string) => {
-        return await UserModel.findById(userId);
+        return await UserModel.findById(userId).select(["-password", "-__v"]);
+    };
+
+    getUsers = async () => {
+        return await UserModel.find().select(["-password", "-__v"]);
     };
 }

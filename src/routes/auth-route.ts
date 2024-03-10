@@ -3,7 +3,7 @@ import createUserValidator from "../validator/createUser-validator";
 import logger from "../config/logger";
 import { asyncWrapper } from "../common/utils/asyncWrapper";
 import { AuthController } from "../controller/auth-controller";
-import { AuthService } from "../service/auth-service";
+import { UserService } from "../service/user-service";
 import { HashedPasswordService } from "../service/hashedPassword-Service";
 import { upload } from "../common/middlewares/multerFileHanndler";
 import { CloudinaryStorage } from "../service/cloudinaryStorage";
@@ -14,12 +14,12 @@ import validateRefreshToken from "../common/middlewares/validateRefreshToken";
 import parseRefreshToken from "../common/middlewares/parseRefreshToken";
 
 const authRouter = express.Router();
-const authService = new AuthService();
+const userSerivce = new UserService();
 const hashedPasswordService = new HashedPasswordService();
 const storageService = new CloudinaryStorage();
 const jwtTokenService = new JwtTokenService();
 const authController = new AuthController(
-    authService,
+    userSerivce,
     logger,
     hashedPasswordService,
     storageService,

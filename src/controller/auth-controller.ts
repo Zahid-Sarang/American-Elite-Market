@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { AuthService } from "../service/auth-service";
+import { UserService } from "../service/user-service";
 import { Logger } from "winston";
 import {
     AuthRequest,
@@ -15,7 +15,7 @@ import { JwtPayload } from "jsonwebtoken";
 
 export class AuthController {
     constructor(
-        private authService: AuthService,
+        private userService: UserService,
         private logger: Logger,
         private hashedPasswordSerivce: HashedPasswordService,
         private imageStorage: FileStorage,
@@ -77,7 +77,7 @@ export class AuthController {
             return next(createHttpError(500, "Failed to upload image"));
         }
 
-        const user = await this.authService.createUser({
+        const user = await this.userService.createUser({
             userName,
             email,
             password: hashedPassword,
@@ -116,7 +116,7 @@ export class AuthController {
         }
         const { email, password } = req.body;
 
-        const user = await this.authService.findByEmail(email);
+        const user = await this.userService.findByEmail(email);
 
         if (!user) {
             const error = createHttpError(400, "Email and password not match!");
@@ -159,7 +159,7 @@ export class AuthController {
     // get Self Info
     self = async (req: Request, res: Response) => {
         const authReq = req as AuthRequest;
-        const user = await this.authService.findById(authReq.auth.sub);
+        const user = await this.userService.findById(authReq.auth.sub);
         res.json(user);
     };
 
@@ -177,7 +177,7 @@ export class AuthController {
         const accessToken = this.jwtTokenService.generateAccessToken(payload);
 
         // check user with that token exist
-        const user = await this.authService.findById(authReq.auth.sub);
+        const user = await this.userService.findById(authReq.auth.sub);
         if (!user) {
             const error = createHttpError(
                 400,
