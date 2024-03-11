@@ -10,6 +10,21 @@ export class FollowService {
         });
     };
 
+    isAlreadyFollowed = async (userId: string, userIdToFollow: string) => {
+        return await FollowModal.findOne({
+            followerId: userId,
+            followingId: userIdToFollow,
+        });
+    };
+
+    unFollow = async (loggedInUserId: string, userIdToUnFollow: string) => {
+        await FollowModal.findOneAndDelete({
+            followerId: loggedInUserId,
+            followingId: userIdToUnFollow,
+        });
+        return;
+    };
+
     getFollowings = async (userId: string) => {
         return await FollowModal.find({ followerId: userId })
 

@@ -4,6 +4,7 @@ import { FollowService } from "../service/follow-service";
 import authMiddlware from "../common/middlewares/authMiddlware";
 import { asyncWrapper } from "../common/utils/asyncWrapper";
 import { UserService } from "../service/user-service";
+import followValidator from "../validator/follow-validator";
 
 const followRoute = express.Router();
 const followService = new FollowService();
@@ -12,12 +13,20 @@ const followController = new FollowController(followService, userSerivce);
 
 followRoute.post(
     "/follow/:userId",
+    followValidator,
     authMiddlware,
     asyncWrapper(followController.followUser),
 );
 
+followRoute.post(
+    "/unfollow/:userId",
+    followValidator,
+    authMiddlware,
+    asyncWrapper(followController.unFollowUser),
+);
+
 followRoute.get(
-    "/following",
+    "/following/:userId",
     authMiddlware,
     asyncWrapper(followController.getFollowing),
 );
