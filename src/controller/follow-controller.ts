@@ -73,7 +73,7 @@ export class FollowController {
         res.json({ message: "unfollow user successfully" });
     };
 
-    // Get User Following Method
+    // Get Following Method
     getFollowing = async (req: Request, res: Response, next: NextFunction) => {
         const userId = req.params.userId;
         if (!userId) {
@@ -85,5 +85,19 @@ export class FollowController {
         }
         const following = await this.followService.getFollowings(userId);
         res.json(following);
+    };
+
+    // Get Followers
+    getFollowers = async (req: Request, res: Response, next: NextFunction) => {
+        const userId = req.params.userId;
+        if (!userId) {
+            return next(createHttpError(400, "Invalid userID"));
+        }
+        const user = await this.userSerivce.findById(userId);
+        if (!user) {
+            return next(createHttpError(400, "User not found!"));
+        }
+        const followers = await this.followService.getFollowers(userId);
+        res.json(followers);
     };
 }

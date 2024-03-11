@@ -27,8 +27,13 @@ export class FollowService {
 
     getFollowings = async (userId: string) => {
         return await FollowModal.find({ followerId: userId })
-
             .populate("followingId", "-password -__V")
+            .exec();
+    };
+
+    getFollowers = async (userId: string) => {
+        return await FollowModal.find({ followingId: userId })
+            .populate("followerId", "-password -__V")
             .exec();
     };
 }
