@@ -1,3 +1,4 @@
+
 import PostModel from "../models/post-model";
 import { Post } from "../types/post-types";
 import { UserInfo } from "../types/user-types";
@@ -39,5 +40,5 @@ export class PostService {
         return await PostModel.findByIdAndDelete(postId);
     };
 
-    // Get lates post
+    
 }

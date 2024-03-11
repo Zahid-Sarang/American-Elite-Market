@@ -25,7 +25,10 @@ export class UserService {
     };
 
     findById = async (userId: string) => {
-        return await UserModel.findById(userId).select(["-password", "-__v"]);
+        return await UserModel.findById(userId)
+            .select(["followingId", "-password", "-__v"])
+            .lean()
+            .exec();
     };
 
     getUsers = async () => {

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import FollowModal from "../models/follow-modal";
+import { FollowInfo } from "../types/follow-types";
 
 export class FollowService {
     constructor() {}
@@ -38,16 +39,13 @@ export class FollowService {
             .exec();
     };
 
-    getFollowUsers = async (userId: string) => {
+    getFollowUsers = async (userId: string): Promise<FollowInfo> => {
         const followingInfo = await FollowModal.aggregate([
-            // Match documents where the given user is either the follower or the following user
             {
                 $match: {
                     $or: [{ followerId: userId }, { followingId: userId }],
                 },
             },
-
-            // Group documents by user ID and push user IDs into arrays
             {
                 $group: {
                     _id: null,
@@ -99,6 +97,8 @@ export class FollowService {
                 },
             },
         ]);
-        return followingInfo.length > 0 ? followingInfo[0] : { following: [], followers: [] };
+        return followingInfo.length > 0
+            ? followingInfo[0]
+            : { following: [], followers: [] };
     };
 }

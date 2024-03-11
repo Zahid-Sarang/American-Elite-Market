@@ -39,9 +39,4 @@ postRoute.delete(
     asyncWrapper(postController.deletePost),
 );
 
-// postRoute.get(
-//     "/latestPost/:userId",
-//     authMiddlware,
-//     asyncWrapper(postController.latestPosts),
-// );
 export default postRoute;

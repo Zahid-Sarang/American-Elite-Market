@@ -10,7 +10,6 @@ interface PostSchema {
     user: UserInfo;
 }
 
-// Define the schema for the Post
 const postSchema = new Schema<PostSchema>({
     _id: {
         type: String,

@@ -127,19 +127,5 @@ export class PostController {
         res.json("post deleted");
     };
 
-    // Get Given User Following User Latest Post Method
-    // latestPosts = async (req: Request, res: Response, next: NextFunction) => {
-    //     const userId = req.params.userId;
-    //     if (!userId) {
-    //         return next(createHttpError(400, "Invalid userID"));
-    //     }
-
-    //     const following = await this.followService.getFollowings(userId);
-
-    //     // get users ids
-    //     const followingUserIds = following.map((follow) => follow._id);
-    //     const newPosts = await this.postService.getLatestPost(followingUserIds);
-    //     console.log(newPosts);
-    //     res.json(newPosts);
-    // };
+    
 }
