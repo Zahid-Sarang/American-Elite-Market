@@ -38,4 +38,6 @@ export class PostService {
     deleteById = async (postId: string) => {
         return await PostModel.findByIdAndDelete(postId);
     };
+
+    // Get lates post
 }

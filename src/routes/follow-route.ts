@@ -37,4 +37,9 @@ followRoute.get(
     asyncWrapper(followController.getFollowers),
 );
 
+followRoute.get(
+    "/followInfo/:userId",
+    authMiddlware,
+    asyncWrapper(followController.getFollowInfo),
+);
 export default followRoute;

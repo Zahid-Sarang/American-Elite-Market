@@ -13,11 +13,11 @@ const followSchema = new mongoose.Schema<FollowSchema>({
         default: () => uuidv4(),
     },
     followerId: {
-        type: String,
+        type: mongoose.Schema.Types.Mixed,
         ref: "User",
     },
     followingId: {
-        type: String,
+        type: mongoose.Schema.Types.Mixed,
         ref: "User",
     },
 });

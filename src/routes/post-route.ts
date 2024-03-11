@@ -5,11 +5,18 @@ import logger from "../config/logger";
 import authMiddlware from "../common/middlewares/authMiddlware";
 import { asyncWrapper } from "../common/utils/asyncWrapper";
 import { UserService } from "../service/user-service";
+import { FollowService } from "../service/follow-service";
 
 const postRoute = express.Router();
 const postService = new PostService();
 const userService = new UserService();
-const postController = new PostController(postService, userService, logger);
+const followService = new FollowService();
+const postController = new PostController(
+    postService,
+    userService,
+    followService,
+    logger,
+);
 
 postRoute.post("/", authMiddlware, asyncWrapper(postController.createPost));
 
@@ -31,4 +38,10 @@ postRoute.delete(
     authMiddlware,
     asyncWrapper(postController.deletePost),
 );
+
+// postRoute.get(
+//     "/latestPost/:userId",
+//     authMiddlware,
+//     asyncWrapper(postController.latestPosts),
+// );
 export default postRoute;

@@ -6,11 +6,13 @@ import { AuthRequest } from "../types/user-types";
 import { PostService } from "../service/post-service";
 import { Logger } from "winston";
 import { UserService } from "../service/user-service";
+import { FollowService } from "../service/follow-service";
 
 export class PostController {
     constructor(
         private postService: PostService,
         private userService: UserService,
+        private followService: FollowService,
         private logger: Logger,
     ) {}
 
@@ -56,10 +58,13 @@ export class PostController {
         res.json(post);
     };
 
+    // Get All Post Method
     getAllPost = async (req: Request, res: Response) => {
         const posts = await this.postService.getPosts();
         res.json(posts);
     };
+
+    // Update Post Method
     updatePost = async (
         req: PostRequest,
         res: Response,
@@ -96,7 +101,6 @@ export class PostController {
     };
 
     // Delete Post Method
-
     deletePost = async (req: Request, res: Response, next: NextFunction) => {
         const postId = req.params.postId;
         const userId = (req as AuthRequest).auth.sub;
@@ -122,4 +126,20 @@ export class PostController {
         await this.postService.deleteById(postId);
         res.json("post deleted");
     };
+
+    // Get Given User Following User Latest Post Method
+    // latestPosts = async (req: Request, res: Response, next: NextFunction) => {
+    //     const userId = req.params.userId;
+    //     if (!userId) {
+    //         return next(createHttpError(400, "Invalid userID"));
+    //     }
+
+    //     const following = await this.followService.getFollowings(userId);
+
+    //     // get users ids
+    //     const followingUserIds = following.map((follow) => follow._id);
+    //     const newPosts = await this.postService.getLatestPost(followingUserIds);
+    //     console.log(newPosts);
+    //     res.json(newPosts);
+    // };
 }

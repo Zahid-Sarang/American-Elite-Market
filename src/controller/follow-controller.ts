@@ -100,4 +100,20 @@ export class FollowController {
         const followers = await this.followService.getFollowers(userId);
         res.json(followers);
     };
+
+    // Follow info Method
+
+    getFollowInfo = async (req: Request, res: Response, next: NextFunction) => {
+        const userId = req.params.userId;
+        if (!userId) {
+            return next(createHttpError(400, "Invalid userID"));
+        }
+        const user = await this.userSerivce.findById(userId);
+        if (!user) {
+            return next(createHttpError(400, "User not found!"));
+        }
+
+        const followInfo = await this.followService.getFollowUsers(userId);
+        res.json(followInfo);
+    };
 }

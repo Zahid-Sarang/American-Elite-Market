@@ -19,7 +19,7 @@ const postSchema = new Schema<PostSchema>({
     content: { type: String, required: true },
     timestamp: { type: Date, default: Date.now },
     user: {
-        type: String,
+        type: Schema.Types.Mixed,
         ref: "User",
     },
 });
