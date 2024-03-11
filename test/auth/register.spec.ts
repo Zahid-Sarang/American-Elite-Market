@@ -48,7 +48,6 @@ describe("POST /auth/register", () => {
         console.log(response.body);
 
         expect(response.statusCode).toBe(201);
-
         expect(response.body).toBeDefined();
         expect(response.body.id).toBeDefined();
 
@@ -61,5 +60,7 @@ describe("POST /auth/register", () => {
         expect(registeredUser).toBeDefined();
         expect(registeredUser!.userName).toBe(userData.userName);
         expect(registeredUser!.email).toBe(userData.email);
+        expect(registeredUser!.password).not.toBe(userData.password);
+        expect(registeredUser!.password).toMatch(/^\$2[a|b]\$\d+\$/);
     });
 });
