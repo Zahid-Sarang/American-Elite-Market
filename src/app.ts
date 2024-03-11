@@ -9,6 +9,7 @@ import followRoute from "./routes/follow-route";
 const app = express();
 app.use(express.static("public"));
 app.use(express.json());
+
 app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
