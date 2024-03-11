@@ -8,7 +8,7 @@ export interface RefreshToken extends Document {
 const refreshSchema = new Schema<RefreshToken>(
     {
         expiresAt: { type: Date, required: true },
-        user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        user: { type: Schema.Types.Mixed, ref: "User", required: true },
     },
     { timestamps: true },
 );
