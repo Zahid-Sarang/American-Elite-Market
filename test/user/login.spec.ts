@@ -96,7 +96,7 @@ describe("POST /auth/login", () => {
             password: "password",
         };
 
-        const response = await request(app).post("/auth/login").send(loginData);
+        await request(app).post("/auth/login").send(loginData);
 
         const userId = registeredUser!._id;
         const refreshToken = await refreshTokenModel.findOne({

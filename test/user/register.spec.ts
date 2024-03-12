@@ -29,7 +29,7 @@ afterEach(async () => {
     await mongoose.connection.dropDatabase();
 });
 
-describe("POST /auth/register", () => {
+describe("POST /posts", () => {
     it("should register a new user", async () => {
         const imagePath = path.join(__dirname, "../../public/testing.jpeg");
         const profilePhoto = fs.readFileSync(imagePath);
