@@ -80,11 +80,12 @@ export class PostController {
         }
 
         const isPostExist = await this.postService.findPostById(postId);
+
         if (!isPostExist) {
             return next(createHttpError(400, "Post Not Found"));
         }
 
-        if (isPostExist.user._id !== userId) {
+        if (isPostExist?.user._id !== userId) {
             return next(
                 createHttpError(
                     400,
@@ -126,6 +127,4 @@ export class PostController {
         await this.postService.deleteById(postId);
         res.json("post deleted");
     };
-
-    
 }

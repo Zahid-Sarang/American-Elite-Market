@@ -33,7 +33,7 @@ afterEach(async () => {
 });
 
 describe("POST /posts", () => {
-    it("should update a user and return new user data", async () => {
+    it("should create a post ", async () => {
         const imagePath = path.join(__dirname, "../../public/testing.jpeg");
         const profilePhoto = fs.readFileSync(imagePath);
         const userData = {
@@ -58,9 +58,9 @@ describe("POST /posts", () => {
             .post("/posts")
             .set("Cookie", [`accessToken=${accessToken}`])
             .send(postData);
+        console.log(response.body);
 
         const createdPost = await PostModel.findById(response.body.id);
-        console.log(createdPost);
 
         expect(response.statusCode).toBe(201);
         expect(postData.content).toBe(createdPost?.content);

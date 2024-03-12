@@ -25,7 +25,7 @@ export class UserService {
     };
 
     findById = async (userId: string) => {
-        return await UserModel.findById(userId).select(["followingId"]);
+        return await UserModel.findById(userId);
     };
 
     getUsers = async () => {
@@ -38,7 +38,7 @@ export class UserService {
             { _id: userId },
             { userName, bio, profileImage },
             { new: true },
-        ).select(["-password", "-__v"]);
+        );
     };
 
     deleteById = async (userId: string) => {
