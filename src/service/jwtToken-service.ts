@@ -1,19 +1,19 @@
-import path from "path";
-import fs from "fs";
 import { JwtPayload, sign } from "jsonwebtoken";
 import { Config } from "../config";
 import { UserInfo } from "../types/user-types";
 import refreshTokenModel from "../models/refreshToken-model";
+import createHttpError from "http-errors";
 
 export class JwtTokenService {
     constructor() {}
 
     generateAccessToken = (payload: JwtPayload) => {
-        const privateKey = fs.readFileSync(
-            path.join(__dirname, "../../certs/private.pem"),
-        );
-
-        const accessToken = sign(payload, privateKey, {
+        const privateKey = Config.PRIVATE_KEY;
+        if (!Config.PRIVATE_KEY) {
+            const error = createHttpError(500, "SECRET_KEY is not set");
+            throw error;
+        }
+        const accessToken = sign(payload, privateKey!, {
             algorithm: "RS256",
             expiresIn: "1h",
         });
