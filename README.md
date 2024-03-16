@@ -1,5 +1,10 @@
 # Successfully Complete the Assignment Social Networking API with MongoDB 💻
 
+## Links
+
+### Deploy Link : https://american-elite.up.railway.app/
+### Api Documentation Link : https://american-elite-api-docs.netlify.app/
+
 ## Features
 
 - ✅ Create user profile
@@ -16,6 +21,28 @@
 - ✅ Delete post
 - ✅ Following Mechanism
 - ✅ Integration testing using jest and supertest
+
+
+
+
+### Checklist for Building a Secure and Robust Node.js Application
+
+- [ ] **Use JWT Tokens with RefreshToken and AccessToken Mechanism:** Securely transmit data with JWT tokens, utilizing refreshToken and accessToken for enhanced security.
+  
+- [ ] **Utilize Jest for Writing Integration Tests:** Ensure seamless interaction between application components using Jest for comprehensive integration testing.
+
+- [ ] **Implement Express Validator for Request Validation and Security:** Safeguard against common security threats by validating requests and ensuring data integrity with Express Validator.
+
+- [ ] **Adhere to SOLID Principles for Writing Clean Code:** Write maintainable and scalable code following SOLID principles, and enforce consistent formatting with tools like Prettier and ESLint.
+
+- [ ] **Incorporate Error Handling Middleware for Better Error Management:** Enhance user experience and streamline debugging by implementing error handling middleware.
+
+- [ ] **Utilize Cloudinary for Image Storage:** Securely store and manage images efficiently with Cloudinary's services.
+
+- [ ] **Leverage TypeScript for Writing Bug-Free Code:** Improve code quality and minimize errors by using TypeScript for static typing and bug prevention.
+
+
+
 
 ## Setup Guide
 
