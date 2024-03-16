@@ -79,7 +79,7 @@ certs/
 .env
 .env.development
 .env.test.local
-.env.production.local
+.env.production
 .env.local
 .env.prod
 .env.dev
