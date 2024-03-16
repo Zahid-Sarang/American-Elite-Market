@@ -5,11 +5,12 @@ import authRouter from "./routes/auth-route";
 import userRoute from "./routes/user-route";
 import postRoute from "./routes/post-route";
 import followRoute from "./routes/follow-route";
+import cors from "cors";
 
 const app = express();
 app.use(express.static("public"));
 app.use(express.json());
-
+app.use(cors)
 app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
